@@ -1,12 +1,15 @@
-
 import './App.css'
+import { BrowserRouter } from "react-router-dom"
+import { AppRouter } from './Router'
+
 
 function App() {
  
-
   return (
     <>
-     <h1>hola</h1>
+      <BrowserRouter>
+        <AppRouter/>
+      </BrowserRouter>  
     </>
   )
 }
