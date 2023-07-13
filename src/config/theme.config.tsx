@@ -7,7 +7,10 @@ import {  createTheme } from "@mui/material";
 enum themePallet {
     FONT_GLOBAL = "Source Code Pro",
     BG = "#12181B",
-    LIME = "#C8FA5F"
+    LIME = "#C8FA5F",
+    // ALERT STYLES
+    ERROR_MAIN = "F44336",
+    BG_ERROR_MAIN = "rbga(244,67,54,0.1)"
 }
 
 export const theme = createTheme({
@@ -30,18 +33,21 @@ export const theme = createTheme({
                     textTransform: "none"
                 }
             }
+        },
+        MuiAlert: {
+            defaultProps: {
+                style: {
+                    borderRadius: "0.8em",
+                    fontSize: "1em"
+                }
+            },
+            styleOverrides: {
+                standardError: {
+                    border: `1px solid ${themePallet.ERROR_MAIN}`,
+                    background: themePallet.BG_ERROR_MAIN,
+                }
+            }
         }
     }
     
 })
-
-
-
-/* export const ThemeConfig: React.FC<ThemeProp> = ({children}) => {
-
-
-    return <ThemeProvider theme={theme}>
-                <CssBaseline/>
-                {children}
-            </ThemeProvider>
-    } */
