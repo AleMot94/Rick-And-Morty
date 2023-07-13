@@ -6,6 +6,7 @@ import './index.css'
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from './config/theme.config';
+import { NotificationProvider } from './context/notification.context.tsx';
 
 import '@fontsource/roboto/700.css';
 
@@ -13,7 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline/>
-      <App />
+      <NotificationProvider>
+        <App />
+      </NotificationProvider>
     </ThemeProvider>
   </React.StrictMode>,
 )
