@@ -5,15 +5,21 @@ import { useNotification } from "../../context/notification.context";
 
 export const HomePage: React.FC<{}> = () => {
 
-    const { getError } = useNotification();
+    const { getError, getSuccess } = useNotification();
     
-    const handleClick = () => {
-        getError("que ondaaa")
+    const handleClickError = () => {
+        getError("algun error salio")
     }
 
+    const handleClickSuccess = () => {
+        getSuccess("algo salio exitasamente")
+    }
+
+
     return (
-        <Container onClick={handleClick} sx={{ mt: 9}} maxWidth="xl">
-            <Button variant='contained' fullWidth>home</Button>
+        <Container sx={{ mt: 9}} maxWidth="xl">
+            <Button onClick={handleClickError} variant='contained' fullWidth>error</Button>
+            <Button onClick={handleClickSuccess} variant='contained' fullWidth>success</Button>
         </Container>
     )
 }

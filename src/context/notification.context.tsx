@@ -22,8 +22,15 @@ export const NotificationProvider: React.FC<{children: JSX.Element}> = ({childre
         setMsg(msg)
     };
 
+    const getSuccess = (msg: string) => {
+        setSeverity("success")
+        setOpen(true)
+        setMsg(msg)
+    };
+
     const value = {
-        getError
+        getError,
+        getSuccess
     }
 
     const handleClose = () => {
