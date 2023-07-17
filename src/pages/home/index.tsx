@@ -5,55 +5,89 @@ import { HeaderComponent } from "../../components";
 import { characters } from "../../api/characters";
 import { CardComponent } from "../../components";
 import { TypeCharacter } from "./interface/character.interface";
-import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import Pagination from '@mui/material/Pagination'
+import CircularProgress from '@mui/material/CircularProgress'
 
 export const HomePage: React.FC<{}> = () => {
-
-    const [allCharacters, setAllCharacters] = React.useState<TypeCharacter[] | null>(null)
-
-    React.useEffect(()=>{
-        characters.getAll({page:1}).then((res)=>{
-            setAllCharacters(res.data.results)
-        }).catch((e)=>{
-            console.log(e)
-        }),
-
-        characters.getById({id:27}).then((res)=>{
-            console.log(res.data)
-        }).catch((e)=>{
-            console.log(e)
+    const [page, setPage] = React.useState(1);
+    const [count, setCount] = React.useState(1);
+    const [allCharacters, setAllCharacters] = React.useState<
+      TypeCharacter[] | null
+    >(null);
+    const [loading, setLoading] = React.useState<boolean>(true);
+  
+    React.useEffect(() => {
+      setLoading(true);
+      characters
+        .getAll({ page: page })
+        .then((r) => {
+          setCount(r.data.info.pages);
+          setAllCharacters(r.data.results);
+          setTimeout(() => setLoading(false), 1000);
         })
-    }, [])
-
-    console.log(allCharacters)
-
+        .catch((e) => {
+          console.error(e);
+        });
+    }, [page]);
+  
+    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+      setPage(value);
+    };
+  
     return (
-        <Container maxWidth="xl">
-          <HeaderComponent 
-                title="Un Titulo" 
-                description="esta es una descripcion" 
-                element={<Button variant="contained">boton</Button>}
-           />
-           <div>
-            {allCharacters!.length > 0 ? (
-                        <Grid container spacing={2} direction="row">
-                            {allCharacters?.map((character) => (
-                                <Grid item xs={3}>
-                                    <CardComponent 
-                                        key={character.id} 
-                                        img={character.image} 
-                                        name={character.name} 
-                                        species={character.species} 
-                                        status={character.status}
-                                    />
-                                </Grid>
-                            ))}
-                        </Grid>
-                    ) : <div>no hay data</div>
-                }
-           </div>
-             
-        </Container>
-    )
-}
+      <Container maxWidth="xl">
+        <HeaderComponent
+          title="Hola mundo"
+          description="Hola mundo bienvenido a Codrr"
+          element={
+            <Button fullWidth variant="contained">
+              Hola mundo
+            </Button>
+          }
+        />
+        {loading ? (
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <>
+            <div>
+              {allCharacters!.length !== 0 ? (
+                <Grid sx={{ my: 2 }} container spacing={2} direction="row">
+                  {allCharacters!.map((character) => (
+                    <Grid item xs={3}>
+                      <CardComponent
+                        key={character.id}
+                        img={character.image}
+                        name={character.name}
+                        species={character.species}
+                        status={character.status}
+                        id={character.id}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              ) : (
+                "No data"
+              )}
+            </div>
+            <Box
+              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
+            >
+              <Pagination
+                variant="outlined"
+                color="primary"
+                count={count}
+                page={page}
+                onChange={handleChange}
+                sx={{ mb: 3 }}
+                size="large"
+              />
+            </Box>
+          </>
+        )}
+      </Container>
+    );
+  };
