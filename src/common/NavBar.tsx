@@ -8,11 +8,21 @@ import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
+import { Cart } from './Cart'
+import IconButton from '@mui/material/IconButton'
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
+import Badge from '@mui/material/Badge'
 
 
 export const NavBar: React.FC<{}> = () => {
 
     const navigate = useNavigate();
+    const [open, setOpen] = React.useState<boolean>(false)
+
+    
+    const handleOpenCart = () => {
+        setOpen((state) => !state);
+      };
     
     return(
         <Box>
@@ -30,6 +40,14 @@ export const NavBar: React.FC<{}> = () => {
                                 </Grid>
                                 <Grid item>
                                     <Stack direction={"row"} spacing={3}>
+                                        <IconButton
+                                            color="primary"
+                                            onClick={() => handleOpenCart()}
+                                        >
+                                            <Badge color="error" badgeContent={5}>
+                                                <AddShoppingCartIcon />
+                                            </Badge>  
+                                        </IconButton>
                                         <Button variant='contained' onClick={() => navigate("login")}>login</Button>
                                         <Button variant='outlined'>register</Button>
                                     </Stack>
@@ -39,6 +57,7 @@ export const NavBar: React.FC<{}> = () => {
                     </Container>
                 </Toolbar>
             </AppBar>
+            <Cart open={open} handleOpenCart={handleOpenCart}/>
 
         </Box>
     )
