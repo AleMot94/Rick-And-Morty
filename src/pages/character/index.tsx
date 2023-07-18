@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography'
 import Chip from '@mui/material/Chip'
 
 
-export const CharacterPage: React.FC<{}> = () => {
+const CharacterPage: React.FC<{}> = () => {
 
     const {id} = useParams()
 
@@ -65,3 +65,5 @@ export const CharacterPage: React.FC<{}> = () => {
         </Box>
     )
 }
+
+export default CharacterPage

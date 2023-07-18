@@ -17,7 +17,7 @@ type LoginType = {
 }
 
 
-export const LoginPage: React.FC<{}> = () => {
+const LoginPage: React.FC<{}> = () => {
 
     const { getSuccess } = useNotification()
 
@@ -78,3 +78,5 @@ export const LoginPage: React.FC<{}> = () => {
         </Container>
     )
 }
+
+export default LoginPage
