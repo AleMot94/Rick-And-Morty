@@ -12,12 +12,14 @@ import { Cart } from './Cart'
 import IconButton from '@mui/material/IconButton'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import Badge from '@mui/material/Badge'
+import { useAppSelector } from '../redux/hooks'
 
 
 export const NavBar: React.FC<{}> = () => {
 
     const navigate = useNavigate();
     const [open, setOpen] = React.useState<boolean>(false)
+    const items = useAppSelector((state) => state.cartReducer)
 
     
     const handleOpenCart = () => {
@@ -44,7 +46,7 @@ export const NavBar: React.FC<{}> = () => {
                                             color="primary"
                                             onClick={() => handleOpenCart()}
                                         >
-                                            <Badge color="error" badgeContent={5}>
+                                            <Badge color="error" badgeContent={items.length}>
                                                 <AddShoppingCartIcon />
                                             </Badge>  
                                         </IconButton>

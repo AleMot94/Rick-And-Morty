@@ -7,6 +7,9 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
+import { useAppSelector } from "../redux/hooks"
+import { CartCard } from "../components"
+
 
 
 interface CartProps {
@@ -16,6 +19,7 @@ interface CartProps {
 
 export const Cart: React.FC<CartProps> = ({open, handleOpenCart}) =>{
 
+    const items = useAppSelector((state) => state.cartReducer)
 
     return(
         <Drawer anchor={'right'} open={open}>
@@ -27,7 +31,13 @@ export const Cart: React.FC<CartProps> = ({open, handleOpenCart}) =>{
                     <Typography variant="h4" textAlign="center" sx={{flexGrow:1}}>Cart</Typography>
                 </Stack>
                 <Divider/>
-            </Box> 
+            </Box>
+            
+            {
+                items.length > 0 ? items.map((item) => (
+                    <CartCard key={item.id} id={item.id} name={item.name} img={item.img}/>
+                )) : <div>vacio</div>
+            }
         </Drawer>
     )
 } 

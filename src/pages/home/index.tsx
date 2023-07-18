@@ -20,8 +20,8 @@ export const HomePage: React.FC<{}> = () => {
     >(null);
     const [loading, setLoading] = React.useState<boolean>(true);
 
-    const estadoRedux = useAppSelector(state => state.cartReducer)
-    console.log(estadoRedux)
+    /* const estadoRedux = useAppSelector(state => state.cartReducer)
+    console.log(estadoRedux) */
   
     React.useEffect(() => {
       setLoading(true);
