@@ -10,6 +10,8 @@ import Box from '@mui/material/Box'
 import Pagination from '@mui/material/Pagination'
 import CircularProgress from '@mui/material/CircularProgress'
 
+import { useAppSelector } from "../../redux/hooks";
+
 export const HomePage: React.FC<{}> = () => {
     const [page, setPage] = React.useState(1);
     const [count, setCount] = React.useState(1);
@@ -17,6 +19,9 @@ export const HomePage: React.FC<{}> = () => {
       TypeCharacter[] | null
     >(null);
     const [loading, setLoading] = React.useState<boolean>(true);
+
+    const estadoRedux = useAppSelector(state => state.cartReducer)
+    console.log(estadoRedux)
   
     React.useEffect(() => {
       setLoading(true);
@@ -57,9 +62,8 @@ export const HomePage: React.FC<{}> = () => {
               {allCharacters!.length !== 0 ? (
                 <Grid sx={{ my: 2 }} container spacing={2} direction="row">
                   {allCharacters!.map((character) => (
-                    <Grid item xs={3}>
+                    <Grid item xs={3} key={character.id}>
                       <CardComponent
-                        key={character.id}
                         img={character.image}
                         name={character.name}
                         species={character.species}

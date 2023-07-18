@@ -6,7 +6,10 @@ import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import Grid from '@mui/material/Grid'
+import { useAppDispatch, useAppSelector } from "../../redux/hooks"
+import { addToCart } from "../../redux/slices/cart.slice"
 
 
 
@@ -21,6 +24,24 @@ type CardProps = {
 export const CardComponent: React.FC<CardProps> = ({img, name, species, status, id}) => {
 
     let navigate = useNavigate()
+    const [disableBtn, setDisableBtn] = React.useState<boolean>(false)
+    const dispatch = useAppDispatch()
+    const itemExist = useAppSelector((state) => state.cartReducer)
+
+    const handleAddToCart = () => {
+        dispatch(addToCart({
+            id,
+            name,
+            img,
+            info: status
+        }))
+    }
+
+    React.useEffect(()=>{
+        itemExist.some((item) => item.id === id)
+        ? setDisableBtn(true)
+        : setDisableBtn(false)
+    }, [itemExist, id])
 
     return(
         <Card>
@@ -37,7 +58,14 @@ export const CardComponent: React.FC<CardProps> = ({img, name, species, status, 
             <Typography sx={{mt:1.5}}>Estado: {status}</Typography>
         </CardContent>
         <CardActions>
-            <Button fullWidth variant="contained" onClick={()=>navigate(`/character/${id}`)}>Learn More</Button>
+            <Grid container spacing={2}>
+                <Grid xs={6} item>
+                    <Button fullWidth variant="contained" onClick={()=>navigate(`/character/${id}`)}>Learn More</Button>
+                </Grid>
+                <Grid xs={6} item>
+                    <Button fullWidth variant="outlined" onClick={handleAddToCart} disabled={disableBtn}>Add To Cart</Button>
+                </Grid>
+            </Grid>
         </CardActions>
         </Card>
     )
