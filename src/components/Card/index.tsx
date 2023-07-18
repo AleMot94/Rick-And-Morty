@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom"
 import Grid from '@mui/material/Grid'
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import { addToCart } from "../../redux/slices/cart.slice"
+import { setItem } from "../../utils/localStorage";
 
 
 
@@ -41,6 +42,7 @@ export const CardComponent: React.FC<CardProps> = ({img, name, species, status, 
         itemExist.some((item) => item.id === id)
         ? setDisableBtn(true)
         : setDisableBtn(false)
+        setItem("cart", itemExist)
     }, [itemExist, id])
 
     return(
