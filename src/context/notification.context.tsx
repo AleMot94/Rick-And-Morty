@@ -5,12 +5,20 @@ import { Notification } from "../components"
 
 type ContextProps = {
     getError: (msg:string) => void;
+<<<<<<< HEAD
+=======
+    getSuccess: (msg:string) => void;
+>>>>>>> version4
 }
 
 const NotificationContext = React.createContext<ContextProps | null>(null);
 
 export const NotificationProvider: React.FC<{children: JSX.Element}> = ({children}) => {
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> version4
     const [msg, setMsg] = useState("")
     const [open, setOpen] = useState(false)
     const [severity, setSeverity] = useState<AlertColor | undefined>(undefined)
@@ -21,8 +29,20 @@ export const NotificationProvider: React.FC<{children: JSX.Element}> = ({childre
         setMsg(msg)
     };
 
+<<<<<<< HEAD
     const value = {
         getError
+=======
+    const getSuccess = (msg: string) => {
+        setSeverity("success")
+        setOpen(true)
+        setMsg(msg)
+    };
+
+    const value = {
+        getError,
+        getSuccess
+>>>>>>> version4
     }
 
     const handleClose = () => {

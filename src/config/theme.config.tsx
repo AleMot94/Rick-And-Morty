@@ -10,7 +10,13 @@ enum themePallet {
     LIME = "#C8FA5F",
     // ALERT STYLES
     ERROR_MAIN = "F44336",
+<<<<<<< HEAD
     BG_ERROR_MAIN = "rbga(244,67,54,0.1)"
+=======
+    BG_ERROR_MAIN = "rbga(244,67,54,0.1)",
+    SUCCESS_MAIN = "#66bb6a",
+    BG_SUCCESS_MAIN = "rgba(102,187,106,0.1)",
+>>>>>>> version4
 }
 
 export const theme = createTheme({
@@ -45,9 +51,20 @@ export const theme = createTheme({
                 standardError: {
                     border: `1px solid ${themePallet.ERROR_MAIN}`,
                     background: themePallet.BG_ERROR_MAIN,
+<<<<<<< HEAD
+=======
+                },
+                standardSuccess: {
+                    border: `1px solid ${themePallet.SUCCESS_MAIN}`,
+                    background: themePallet.BG_SUCCESS_MAIN,
+>>>>>>> version4
                 }
             }
         }
-    }
     
+    }
 })
+<<<<<<< HEAD
+=======
+
+>>>>>>> version4
