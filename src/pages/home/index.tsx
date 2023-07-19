@@ -1,24 +1,6 @@
-import React from "react";
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-<<<<<<< HEAD
-import { useNotification } from "../../context/notification.context";
-
-export const HomePage: React.FC<{}> = () => {
-
-    const { getError } = useNotification()
-
-    const handleClick = () => {
-        getError("que ondaaa")
-    }
-
-    return (
-        <Container sx={{ mt: 9}} maxWidth="xl">
-            <Button onClick={handleClick} variant='contained' fullWidth>home</Button>
-        </Container>
-    )
-}
-=======
+import React from "react"
+import Container from '@mui/material/Container'
+import Button from '@mui/material/Button'
 import { HeaderComponent } from "../../components";
 import { characters } from "../../api/characters";
 import { CardComponent } from "../../components";
@@ -28,7 +10,6 @@ import Box from '@mui/material/Box'
 import Pagination from '@mui/material/Pagination'
 import CircularProgress from '@mui/material/CircularProgress'
 
-import { useAppSelector } from "../../redux/hooks";
 
 export const HomePage: React.FC<{}> = () => {
     const [page, setPage] = React.useState(1);
@@ -38,8 +19,6 @@ export const HomePage: React.FC<{}> = () => {
     >(null);
     const [loading, setLoading] = React.useState<boolean>(true);
 
-    /* const estadoRedux = useAppSelector(state => state.cartReducer)
-    console.log(estadoRedux) */
   
     React.useEffect(() => {
       setLoading(true);
@@ -113,4 +92,4 @@ export const HomePage: React.FC<{}> = () => {
       </Container>
     );
   };
->>>>>>> version4
+
