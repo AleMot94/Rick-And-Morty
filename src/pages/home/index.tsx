@@ -36,6 +36,7 @@ export const HomePage: React.FC<{}> = () => {
   
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
       setPage(value);
+      console.log(event)
     };
   
     return (
