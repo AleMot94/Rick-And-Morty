@@ -1,0 +1,55 @@
+# This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
+version: 2.1
+
+jobs:
+  install-dependencies:
+    working_directory: ~/repo
+    docker:
+      - image: cimg/node:16.14.0
+    steps:
+      - checkout
+      - run:
+          name: Update or install NPM
+          command: 'sudo npm install -g npm'
+      - restore_cache:
+          key: app-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  vercel-deploy:
+    build:
+    working_directory: ~/repo
+    docker:
+      - image: cimg/node:16.14.0
+    steps:
+      - checkout
+      - run:
+          name: Install CLI Vercel
+          command: 'sudo npm install -g vercel'
+      - attach_workspace:
+          at: .
+      - run:
+          name: Vercel Prod Deploy
+          command: |
+            npm run build
+            vercel --prod --build-env REACT_APP_BASEURL=https://rickandmortyapi.com/api/ --name "$RYCK_AND_MORTY" --scope "$VERCER_SCOPE" --token="$VERCEL_TOKEN" --yes
+workflows:
+  version: 2
+  deploy-reactapp:
+    jobs:
+      - install-dependencies:
+          filters:
+            branches:
+              only:
+                - develop
+      - vercel-deploy:
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - develop
