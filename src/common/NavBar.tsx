@@ -12,7 +12,8 @@ import { Cart } from './Cart'
 import IconButton from '@mui/material/IconButton'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import Badge from '@mui/material/Badge'
-import { useAppSelector } from '../redux/hooks'
+import { useAppSelector, useAppDispatch } from '../redux/hooks'
+import { logout } from '../redux/slices/auth.slice'
 
 
 export const NavBar: React.FC<{}> = () => {
@@ -20,11 +21,18 @@ export const NavBar: React.FC<{}> = () => {
     const navigate = useNavigate();
     const [open, setOpen] = React.useState<boolean>(false)
     const items = useAppSelector((state) => state.cartReducer)
+    const { isAuth } = useAppSelector((state) => state.authReducer)
+    const dispatch = useAppDispatch()
 
     
     const handleOpenCart = () => {
         setOpen((state) => !state);
       };
+
+    const handlerLogout = () => {
+        dispatch(logout())
+        navigate("/login")
+    }
     
     return(
         <Box>
@@ -41,7 +49,6 @@ export const NavBar: React.FC<{}> = () => {
                                     <Typography>otra cosa</Typography>
                                 </Grid>
                                 <Grid item>
-                                    <Stack direction={"row"} spacing={3}>
                                         <IconButton
                                             color="primary"
                                             onClick={() => handleOpenCart()}
@@ -50,9 +57,16 @@ export const NavBar: React.FC<{}> = () => {
                                                 <AddShoppingCartIcon />
                                             </Badge>  
                                         </IconButton>
-                                        <Button variant='contained' onClick={() => navigate("login")}>login</Button>
-                                        <Button variant='outlined'>register</Button>
-                                    </Stack>
+                                        {
+                                            isAuth 
+                                            ? <Button variant='contained' onClick={handlerLogout}>Logout</Button>
+                                            : 
+                                            <Stack direction={"row"} spacing={3}>   
+                                                <Button variant='contained' onClick={() => navigate("login")}>login</Button>
+                                                <Button variant='outlined'>register</Button>
+                                            </Stack>
+                                        }
+                                    
                                     
                                 </Grid>
                         </Grid>

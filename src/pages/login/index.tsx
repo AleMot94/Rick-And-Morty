@@ -9,6 +9,10 @@ import TextField from '@mui/material/TextField'
 import { useNotification } from "../../context/notification.context"
 import { LoginValidate } from "../../utils/validateForm"
 import { useFormik } from "formik"
+import { useAppDispatch, useAppSelector } from "../../redux/hooks"
+import { login } from "../../redux/slices/auth.slice"
+import { useNavigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 
 type LoginType = {
     username: string;
@@ -19,6 +23,9 @@ type LoginType = {
 const LoginPage: React.FC<{}> = () => {
 
     const { getSuccess } = useNotification()
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const { isAuth } = useAppSelector((state) => state.authReducer)
 
     const formik = useFormik<LoginType>({
         initialValues: {
@@ -27,11 +34,13 @@ const LoginPage: React.FC<{}> = () => {
         },
         validationSchema: LoginValidate,
         onSubmit: (values: LoginType) => {
+          dispatch(login())
+          navigate("/")
           getSuccess(JSON.stringify(values));
         },
       });
 
-    return (
+    return isAuth ? <Navigate to="/" replace/> : (
         <Container maxWidth="sm">
             <Grid 
              container
