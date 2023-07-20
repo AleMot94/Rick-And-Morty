@@ -6,13 +6,14 @@ import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
-import { useNotification } from "../../context/notification.context"
+//import { useNotification } from "../../context/notification.context"
 import { LoginValidate } from "../../utils/validateForm"
 import { useFormik } from "formik"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
-import { login } from "../../redux/slices/auth.slice"
+//import { login } from "../../redux/slices/auth.slice"
 import { useNavigate } from "react-router-dom"
 import { Navigate } from "react-router-dom"
+import { authThunks } from "../../redux/thunks/auth.thunks"
 
 type LoginType = {
     username: string;
@@ -22,10 +23,11 @@ type LoginType = {
 
 const LoginPage: React.FC<{}> = () => {
 
-    const { getSuccess } = useNotification()
+    //const { getSuccess } = useNotification()
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const { isAuth } = useAppSelector((state) => state.authReducer)
+    console.log(isAuth)
 
     const formik = useFormik<LoginType>({
         initialValues: {
@@ -34,9 +36,10 @@ const LoginPage: React.FC<{}> = () => {
         },
         validationSchema: LoginValidate,
         onSubmit: (values: LoginType) => {
-          dispatch(login())
+          //dispatch(login())
+          dispatch(authThunks(values))
           navigate("/")
-          getSuccess(JSON.stringify(values));
+          //getSuccess(JSON.stringify(values));
         },
       });
 
