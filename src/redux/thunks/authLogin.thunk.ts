@@ -2,18 +2,18 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { authFirebase } from "../../config/firebase"
 
-export const authThunks = createAsyncThunk(
+export const authLoginThunks = createAsyncThunk(
     "firebase/auth",
-    async ( {username, password}:{username: string, password:string}, { rejectWithValue} )=>{
+    async ( {username, password}:{username: string, password:string}, { rejectWithValue } )=>{
         try {
-            const authGenerate = await signInWithEmailAndPassword(
+            const authSingIn = await signInWithEmailAndPassword(
                 authFirebase,
                 username,
                 password
             )
 
-            const {email,uid} = authGenerate.user
-            const { token: accessToken, expirationTime} = await authGenerate.user.getIdTokenResult()
+            const { email, uid } = authSingIn.user
+            const { token: accessToken, expirationTime } = await authSingIn.user.getIdTokenResult()
 
             return {
                 accessToken,

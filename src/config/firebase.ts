@@ -1,7 +1,7 @@
 
 import { initializeApp, FirebaseOptions  } from "firebase/app"
 //import * as auth from "firebase/auth"
-import { initializeAuth } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
 
 const firebaseConfig: FirebaseOptions = {
@@ -14,8 +14,4 @@ const firebaseConfig: FirebaseOptions = {
 }
 
 export const appFirebase = initializeApp(firebaseConfig)
-console.log(appFirebase)
-console.log(import.meta.env.REACT_APP_apiKey);
-console.log(import.meta.env.REACT_APP_authDomain);
-export const authFirebase = initializeAuth(appFirebase)
-console.log(authFirebase)
+export const authFirebase = getAuth(appFirebase)

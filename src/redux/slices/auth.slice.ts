@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { authThunks } from "../thunks/auth.thunks";
+import { authLoginThunks } from "../thunks/authLogin.thunk";
+import { authRegisterThunks } from "../thunks/authRegister.thunk";
 import { RejectedActionFromAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
 
 interface AuthState {
@@ -29,21 +30,21 @@ export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        login: (state) => {
-            state.isAuth = true
-        },
+     
         logout: (state) => {
             state.isAuth = false
-        }
+        },
+     
     },
     extraReducers: (builder) => {
-        builder.addCase(authThunks.pending,(state)=>{
+        //LOGIN
+        builder.addCase(authLoginThunks.pending,(state)=>{
             return (state = {
                 ...initialState,
                 loading: true
             })
         })
-        builder.addCase(authThunks.fulfilled,(state,actions)=>{
+        builder.addCase(authLoginThunks.fulfilled,(state,actions)=>{
             return (state = {
                 ...initialState,
                 loading: false,
@@ -54,13 +55,37 @@ export const authSlice = createSlice({
                 userData: actions.payload.userData,
             })
         })
-        builder.addCase(authThunks.rejected,(state, action)=>{
+        builder.addCase(authLoginThunks.rejected,(state, action)=>{
             return (state = {
                 ...initialState,
                 error: action.payload,
             })
         })
+        //REGISTER
+        builder.addCase(authRegisterThunks.pending, (state) => {
+            return {
+                ...initialState,
+                loading: true
+            };
+        });
+        builder.addCase(authRegisterThunks.fulfilled, (state, actions) => {
+            return {
+                ...initialState,
+                loading: false,
+                success: true,
+                accessToken: actions.payload.accessToken,
+                isAuth: true,
+                isExpired: false,
+                userData: actions.payload.userData,
+            };
+        });
+        builder.addCase(authRegisterThunks.rejected, (state, action) => {
+            return {
+                ...initialState,
+                error: action.payload,
+            };
+        });
     }
 })
 
-export const { login, logout} = authSlice.actions
+export const { logout} = authSlice.actions

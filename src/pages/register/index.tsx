@@ -10,10 +10,10 @@ import { useNotification } from "../../context/notification.context"
 import { LoginValidate } from "../../utils/validateForm"
 import { useFormik } from "formik"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
-
 import { useNavigate } from "react-router-dom"
 import { Navigate } from "react-router-dom"
-import { authLoginThunks } from "../../redux/thunks/authLogin.thunk"
+import { authRegisterThunks } from "../../redux/thunks/authRegister.thunk"
+
 
 type LoginType = {
     username: string;
@@ -21,13 +21,12 @@ type LoginType = {
 }
 
 
-const LoginPage: React.FC<{}> = () => {
+const RegisterPage: React.FC<{}> = () => {
 
     const { getSuccess } = useNotification()
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const { isAuth } = useAppSelector((state) => state.authReducer)
-    console.log(isAuth)
 
     const formik = useFormik<LoginType>({
         initialValues: {
@@ -36,10 +35,11 @@ const LoginPage: React.FC<{}> = () => {
         },
         validationSchema: LoginValidate,
         onSubmit: (values: LoginType) => {
-       
-          dispatch(authLoginThunks(values))
-          getSuccess("Iniciaste sesión")
+          
+          dispatch(authRegisterThunks(values))
+          getSuccess("Registro exitoso")
           navigate("/")
+        
         },
       });
 
@@ -53,7 +53,7 @@ const LoginPage: React.FC<{}> = () => {
              sx={{ minHeight: "100vh"}}>
                 <Grid item>
                     <Paper sx={{ padding: "1.2em", borderRadius: "0.5em"}}>
-                        <Typography variant="h4" sx={{ my: 1}}>Inciar Sesión</Typography>
+                        <Typography variant="h4" sx={{ my: 1}}>Registrarse</Typography>
                         <Box 
                         component={"form"} 
                         onSubmit={formik.handleSubmit}>
@@ -81,7 +81,7 @@ const LoginPage: React.FC<{}> = () => {
                                 error={formik.touched.password && Boolean(formik.errors.password)}
                                 helperText={formik.touched.password && formik.errors.password}
                             />
-                            <Button fullWidth type="submit" variant="contained" sx={{ mb: 2}}>iniciar sesión</Button>
+                            <Button fullWidth type="submit" variant="contained" sx={{ mb: 2}}>registrarse</Button>
                         </Box>
                     </Paper>
                 </Grid>
@@ -90,4 +90,4 @@ const LoginPage: React.FC<{}> = () => {
     )
 }
 
-export default LoginPage
+export default RegisterPage
