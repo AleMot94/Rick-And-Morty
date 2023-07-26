@@ -8,8 +8,8 @@ export const characters = {
             page
         }})
     },
-    getById: function({id} : {id: string | undefined}) {
-        return instance.get(`${endPoint}/${id}`)
+    getById: function({cid} : {cid: string | undefined}) {
+        return instance.get(`${endPoint}/${cid}`)
     },
     info: function() {
         return instance.get(endPoint)

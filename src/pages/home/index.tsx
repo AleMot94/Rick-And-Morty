@@ -56,7 +56,7 @@ export const HomePage: React.FC<{}> = () => {
         <HeaderComponent
           title="Store Rick and Morty"
           description="Llevese sus personajes de rick and morty"
-          element={<Typography>{quantytiCharacter} Personajes hasta el momento</Typography>}
+          element={<Typography variant="h5">{quantytiCharacter} Personajes hasta el momento</Typography>}
         />
         {loading ? (
           <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>

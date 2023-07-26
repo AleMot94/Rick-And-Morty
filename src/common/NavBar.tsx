@@ -15,6 +15,7 @@ import Badge from '@mui/material/Badge'
 import { useAppSelector, useAppDispatch } from '../redux/hooks'
 import { logout } from '../redux/slices/auth.slice'
 import { useCookies } from "react-cookie"
+import Link from '@mui/material/Link'
 
 
 export const NavBar: React.FC<{}> = () => {
@@ -49,7 +50,7 @@ export const NavBar: React.FC<{}> = () => {
                             justifyContent={"space-between"} 
                             alignItems={"center"}>
                                 <Grid item>
-                                    <Typography variant='h4'>Store RyM</Typography>
+                                    <Typography variant='h4'><Link href='/' underline="none">Store RyM</Link></Typography>
                                 </Grid>
                                 <Grid item>
                                         <IconButton

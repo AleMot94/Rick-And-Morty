@@ -11,18 +11,12 @@ import Grid from '@mui/material/Grid'
 import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import { addToCart } from "../../redux/slices/cart.slice"
 import { setItem } from "../../utils/localStorage";
+import { CardCartType } from "../../types/cardCart.type";
+import Box from '@mui/material/Box'
+import Chip from '@mui/material/Chip'
 
 
-
-type CardProps = {
-    img: string,
-    name: string,
-    species: string,
-    status: string,
-    id: number,
-}
-
-export const CardComponent: React.FC<CardProps> = ({img, name, species, status, id}) => {
+export const CardComponent: React.FC<CardCartType> = ({img, name, species, status, id}) => {
 
     let navigate = useNavigate()
     const [disableBtn, setDisableBtn] = React.useState<boolean>(false)
@@ -57,15 +51,21 @@ export const CardComponent: React.FC<CardProps> = ({img, name, species, status, 
             <Typography variant="h5">{name}</Typography>
             <Divider/>
             <Typography sx={{mt:3}}>Especie: {species}</Typography>
-            <Typography sx={{mt:1.5}}>Estado: {status}</Typography>
+            <Box sx={{mt:1.5}}>
+                {
+                    status == "Alive"
+                    ? <Typography>Estado: <Chip label={status} color="success" variant="outlined" /></Typography>
+                    : <Typography>Estado: <Chip label={status} color="error" variant="outlined" /></Typography>
+                }
+            </Box>
         </CardContent>
         <CardActions>
             <Grid container spacing={2}>
                 <Grid xs={6} item>
-                    <Button fullWidth variant="contained" onClick={()=>navigate(`/character/${id}`)}>Learn More</Button>
+                    <Button fullWidth variant="contained" onClick={()=>navigate(`/character/${id}`)}>Ver Mas</Button>
                 </Grid>
                 <Grid xs={6} item>
-                    <Button fullWidth variant="outlined" onClick={handleAddToCart} disabled={disableBtn}>Add To Cart</Button>
+                    <Button fullWidth variant="outlined" onClick={handleAddToCart} disabled={disableBtn}>Agregar</Button>
                 </Grid>
             </Grid>
         </CardActions>
