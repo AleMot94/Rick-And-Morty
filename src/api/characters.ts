@@ -10,5 +10,8 @@ export const characters = {
     },
     getById: function({id} : {id: string | undefined}) {
         return instance.get(`${endPoint}/${id}`)
+    },
+    info: function() {
+        return instance.get(endPoint)
     }
 }

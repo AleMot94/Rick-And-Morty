@@ -13,7 +13,7 @@ type HeaderProps = {
 export const HeaderComponent: React.FC<HeaderProps> = ({title, description, element}) => {
     return(
         <div>
-            <Box sx={{ width: "100%", height: "350px"}}>
+            <Box sx={{ width: "100%", height: "250px"}}>
                 <Grid
                     container
                     direction="row"
@@ -21,7 +21,7 @@ export const HeaderComponent: React.FC<HeaderProps> = ({title, description, elem
                     alignItems="center"
                     sx={{height: "100%"}}>
                         <Grid 
-                            item xs={5}
+                            item xs={12}
                             container
                             direction="column"
                             justifyContent="center"
