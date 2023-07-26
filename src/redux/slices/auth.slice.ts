@@ -57,13 +57,13 @@ export const authSlice = createSlice({
         //LOGIN
         builder.addCase(authLoginThunks.pending,(state)=>{
             return (state = {
-                ...initialState,
+                ...state,
                 loading: true
             })
         })
         builder.addCase(authLoginThunks.fulfilled,(state,actions)=>{
             return (state = {
-                ...initialState,
+                ...state,
                 loading: false,
                 success:true,
                 accessToken: actions.payload.accessToken,
@@ -74,20 +74,20 @@ export const authSlice = createSlice({
         })
         builder.addCase(authLoginThunks.rejected,(state, action)=>{
             return (state = {
-                ...initialState,
+                ...state,
                 error: action.payload,
             })
         })
         //REGISTER
         builder.addCase(authRegisterThunks.pending, (state) => {
             return {
-                ...initialState,
+                ...state,
                 loading: true
             };
         });
         builder.addCase(authRegisterThunks.fulfilled, (state, actions) => {
             return {
-                ...initialState,
+                ...state,
                 loading: false,
                 success: true,
                 accessToken: actions.payload.accessToken,
@@ -98,7 +98,7 @@ export const authSlice = createSlice({
         });
         builder.addCase(authRegisterThunks.rejected, (state, action) => {
             return {
-                ...initialState,
+                ...state,
                 error: action.payload,
             };
         });
