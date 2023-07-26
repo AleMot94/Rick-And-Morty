@@ -14,6 +14,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import Badge from '@mui/material/Badge'
 import { useAppSelector, useAppDispatch } from '../redux/hooks'
 import { logout } from '../redux/slices/auth.slice'
+import { useCookies } from "react-cookie"
 
 
 export const NavBar: React.FC<{}> = () => {
@@ -23,6 +24,7 @@ export const NavBar: React.FC<{}> = () => {
     const items = useAppSelector((state) => state.cartReducer)
     const { isAuth } = useAppSelector((state) => state.authReducer)
     const dispatch = useAppDispatch()
+    const [ , , remove] = useCookies()
 
     
     const handleOpenCart = () => {
@@ -31,6 +33,7 @@ export const NavBar: React.FC<{}> = () => {
 
     const handlerLogout = () => {
         dispatch(logout())
+        remove("accessToken")
         navigate("/login")
     }
     

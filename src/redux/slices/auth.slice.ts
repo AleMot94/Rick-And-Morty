@@ -1,7 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { authLoginThunks } from "../thunks/authLogin.thunk";
-import { authRegisterThunks } from "../thunks/authRegister.thunk";
-import { RejectedActionFromAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
+import { createSlice } from "@reduxjs/toolkit"
+import { authLoginThunks } from "../thunks/authLogin.thunk"
+import { authRegisterThunks } from "../thunks/authRegister.thunk"
+import { RejectedActionFromAsyncThunk } from "@reduxjs/toolkit/dist/matchers"
+import { getCookie } from "../../utils/getCookie.utils"
+import { expirationTokenAuth } from "../../utils/decodeToken.utils"
+import { TokenFirebase } from "../../interface/firebase.interface"
+import { tokenDecode } from "../../utils/decodeToken.utils"
 
 interface AuthState {
     isAuth: boolean,
@@ -17,13 +21,26 @@ interface AuthState {
 }
 
 const initialState : AuthState = {
-    isAuth: false,
-    accessToken: null,
+    isAuth: 
+        getCookie("accessToken") !== undefined 
+        ? !expirationTokenAuth(getCookie("accessToken")!)
+        : false,
+    accessToken: 
+        getCookie("accessToken") !== undefined
+        ? getCookie("accessToken")!
+        : null,
     error: null,
-    isExpired: null,
-    loading: null,
-    success: null,
-    userData: null,
+    isExpired: 
+        getCookie("accessToken") !== undefined 
+        ? !expirationTokenAuth(getCookie("accessToken")!)
+        : null,
+    loading: false,
+    success: getCookie("accessToken") !== undefined,
+    userData: getCookie("accessToken") !== undefined
+    ? {
+        email: tokenDecode<TokenFirebase>(getCookie("accessToken")!).email,
+        uid: tokenDecode<TokenFirebase>(getCookie("accessToken")!).sub,
+    }: null,
 }
 
 export const authSlice = createSlice({
@@ -88,4 +105,4 @@ export const authSlice = createSlice({
     }
 })
 
-export const { logout} = authSlice.actions
+export const { logout } = authSlice.actions
