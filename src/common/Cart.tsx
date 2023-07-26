@@ -35,7 +35,7 @@ export const Cart: React.FC<CartProps> = ({open, handleOpenCart}) =>{
             {
                 items.length > 0 ? items.map((item) => (
                     <CartCard key={item.id} id={item.id} name={item.name} img={item.img}/>
-                )) : <div>vacio</div>
+                )) : <Typography textAlign="center" variant="h4" sx={{mt:3}}>vacio</Typography>
             }
         </Drawer>
     )
