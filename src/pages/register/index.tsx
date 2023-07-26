@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 import { useNavigate } from "react-router-dom"
 import { Navigate } from "react-router-dom"
 import { authRegisterThunks } from "../../redux/thunks/authRegister.thunk"
+import Link from '@mui/material/Link'
 
 
 type LoginType = {
@@ -44,13 +45,15 @@ const RegisterPage: React.FC<{}> = () => {
       });
 
     return isAuth ? <Navigate to="/" replace/> : (
-        <Container maxWidth="sm">
+        <Box>
+            <Typography textAlign="center" variant="h3" sx={{mt:5}}>Store Rick and Morty</Typography>
+            <Container maxWidth="sm">
             <Grid 
              container
              direction={"column"}
              alignItems={"center"}
              justifyContent={"center"}
-             sx={{ minHeight: "100vh"}}>
+             sx={{ minHeight: "70vh"}}>
                 <Grid item>
                     <Paper sx={{ padding: "1.2em", borderRadius: "0.5em"}}>
                         <Typography variant="h4" sx={{ my: 1}}>Registrarse</Typography>
@@ -82,11 +85,14 @@ const RegisterPage: React.FC<{}> = () => {
                                 helperText={formik.touched.password && formik.errors.password}
                             />
                             <Button fullWidth type="submit" variant="contained" sx={{ mb: 2}}>registrarse</Button>
+                            <Link href="/login" underline="hover">Ya tengo cuenta</Link>
                         </Box>
                     </Paper>
                 </Grid>
             </Grid>
-        </Container>
+            </Container>
+        </Box>
+        
     )
 }
 

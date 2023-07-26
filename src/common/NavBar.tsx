@@ -49,28 +49,27 @@ export const NavBar: React.FC<{}> = () => {
                             justifyContent={"space-between"} 
                             alignItems={"center"}>
                                 <Grid item>
-                                    <Typography>otra cosa</Typography>
+                                    <Typography variant='h4'>Store RyM</Typography>
                                 </Grid>
                                 <Grid item>
                                         <IconButton
                                             color="primary"
                                             onClick={() => handleOpenCart()}
+                                            sx={{mr: 5}}
                                         >
-                                            <Badge color="error" badgeContent={items.length}>
+                                            <Badge color="error" badgeContent={items.length} >
                                                 <AddShoppingCartIcon />
                                             </Badge>  
                                         </IconButton>
                                         {
                                             isAuth 
-                                            ? <Button variant='contained' onClick={handlerLogout}>Logout</Button>
+                                            ? <Button variant='contained' onClick={handlerLogout} sx={{mr: 5}}>Logout</Button>
                                             : 
                                             <Stack direction={"row"} spacing={3}>   
                                                 <Button variant='contained' onClick={() => navigate("login")}>login</Button>
                                                 <Button variant='outlined'>register</Button>
                                             </Stack>
                                         }
-                                    
-                                    
                                 </Grid>
                         </Grid>
                     </Container>
